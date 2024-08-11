@@ -1,69 +1,62 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, render_template
 from keras.models import load_model
-import numpy as np
 from PIL import Image
-import io
+import numpy as np
 
-# Initialize the Flask app
 app = Flask(__name__)
 
-# Load the pre-trained models
+# Load models
 age_model = load_model('age_model_pretrained.h5')
 gender_model = load_model('gender_model_pretrained.h5')
 emotion_model = load_model('emotion_model_pretrained.h5')
 
-# Function to preprocess image
-def preprocess_image(image, target_size):
-    image = image.resize(target_size)
+# Define mappings
+age_classes = ["0-2", "3-5", "6-12", "13-19", "20-35", "36-40", "41-60"]
+gender_classes = ["Male", "Female"]
+emotion_classes = ["Angry", "Sad", "Happy", "Surprise", "Neutral"]
+
+def prepare_image(image, target_size):
+    """Resize and preprocess the image according to the target size."""
+    image = image.resize(target_size)  # Resize the image
+    image = image.convert('L')  # Convert to grayscale
     image = np.array(image)
     image = np.expand_dims(image, axis=0)  # Add batch dimension
+    image = np.expand_dims(image, axis=-1)  # Add channel dimension for grayscale
     return image
 
-# Function to postprocess prediction
-def postprocess_prediction(prediction):
-    return int(np.argmax(prediction, axis=1)[0])
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    if request.method == 'POST':
+        if 'image' not in request.files:
+            return 'No file part', 400
 
-# Route for the homepage
-@app.route('/')
-def home():
+        file = request.files['image']
+        if file.filename == '':
+            return 'No selected file', 400
+
+        if file:
+            img = Image.open(file)
+
+            # Prepare the image for each model
+            age_img = prepare_image(img, (200, 200))  # For age model
+            gender_img = prepare_image(img, (100, 100))  # For gender model
+            emotion_img = prepare_image(img, (48, 48))  # For emotion model
+
+            # Predict using the models
+            age_probs = age_model.predict(age_img)[0]
+            gender_probs = gender_model.predict(gender_img)[0]
+            emotion_probs = emotion_model.predict(emotion_img)[0]
+
+            # Convert predictions to readable text
+            predicted_age = age_classes[np.argmax(age_probs)]
+            predicted_gender = gender_classes[np.argmax(gender_probs)]
+            predicted_emotion = emotion_classes[np.argmax(emotion_probs)]
+
+            # Process and display the result
+            return render_template('result.html', age=predicted_age, gender=predicted_gender, emotion=predicted_emotion)
+
     return render_template('index.html')
 
-# Route for making predictions
-@app.route('/predict', methods=['POST'])
-def predict():
-    if 'file' not in request.files:
-        return jsonify({"error": "No file uploaded"})
-    
-    file = request.files['file']
-
-    try:
-        img = Image.open(io.BytesIO(file.read()))
-    except:
-        return jsonify({"error": "Invalid image format"})
-
-    # Preprocess image for each model
-    age_img = preprocess_image(img, target_size=(64, 64))  # Example target size
-    gender_img = preprocess_image(img, target_size=(64, 64))
-    emotion_img = preprocess_image(img, target_size=(48, 48))
-
-    # Make predictions
-    age_prediction = age_model.predict(age_img)
-    gender_prediction = gender_model.predict(gender_img)
-    emotion_prediction = emotion_model.predict(emotion_img)
-
-    # Post-process predictions
-    age_result = postprocess_prediction(age_prediction)
-    gender_result = postprocess_prediction(gender_prediction)
-    emotion_result = postprocess_prediction(emotion_prediction)
-
-    # Prepare the response
-    result = {
-        'age': age_result,
-        'gender': 'Male' if gender_result == 0 else 'Female',
-        'emotion': ['Angry', 'Happy', 'Neutral', 'Sad', 'Surprised'][emotion_result]
-    }
-
-    return jsonify(result)
-
-if __name__ == "__main__":
-    app.run(debug=True)
+if __name__ == '__main__':
+    #app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000)
