@@ -1,9 +1,20 @@
-FROM python:3.7-slim-buster
+# Use an official Python runtime as a parent image
+FROM python:3.9-slim
 
-RUN apt update -y && apt install awscli -y
+# Set the working directory in the container
 WORKDIR /app
 
-COPY . /app
-RUN pip install -r requirements.txt
+# Copy the requirements file into the container at /app
+COPY requirements.txt /app/
 
-CMD ["python3", "app.py"]
+# Install any needed packages specified in requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the rest of the application code into the container
+COPY . /app
+
+# Make port 80 available to the world outside this container
+EXPOSE 80
+
+# Run the application
+CMD ["python", "app.py"]
