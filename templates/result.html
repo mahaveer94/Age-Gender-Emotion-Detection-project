@@ -4,12 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prediction Result</title>
+    <style>
+        body{ background-color: #dff7f6;}
+        .wrapper{     clear: both;
+    width: 700px;
+    font-family: verdana;
+    padding: 10px;
+    margin: 0 auto;
+    background: #73bfbc;
+    height: 250px;
+    border-radius: 10px; }
+        .headw{ clear: both;
+    width: 100%;
+    text-align: center;
+    font-size: 19px; padding: 10px;  }
+        .rowd{clear:both; width: 100%; text-align: center; font-size: 18px;padding: 10px;}
+        .leftd{  width: 100%; text-align: left;padding: 10px; float: left;}
+        .rightd{   width: 40%; text-align: left;padding: 10px;  float: left;}
+        .subd{clear:both; width: 90%; text-align: right; padding: 10px;  float: left;}
+    </style>
 </head>
 <body>
-    <h1>Prediction Result</h1>
-    <p><strong>Predicted Age:</strong> {{ age }}</p>
-    <p><strong>Predicted Gender:</strong> {{ gender }}</p>
-    <p><strong>Predicted Emotion:</strong> {{ emotion }}</p>
-    <a href="/">Go back</a>
+    <div class="wrapper">
+        <div class="headw" style="font-size: 23px;">
+            Age,Gender,Emotion detection Project Using CNN
+        </div>
+        <div class="headw">
+            Prediction Result
+        </div> 
+        <div class="leftd"><strong>Predicted Age:</strong> {{ age }}
+        </div> 
+        <div class="leftd">
+            <strong>Predicted Gender:</strong> {{ gender }}
+        </div> 
+        <div class="leftd"><strong>Predicted Emotion:</strong> {{ emotion }}
+        </div> 
+        <div class="leftd"><a href="/">Go back</a></div>
+    </div>  
+    
 </body>
 </html>

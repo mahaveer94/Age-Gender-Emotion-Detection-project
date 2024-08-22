@@ -4,14 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload Image</title>
+    <style>
+        body{ background-color: #dff7f6;}
+        .wrapper{     clear: both;
+    width: 700px;
+    font-family: verdana;
+    padding: 10px;
+    margin: 0 auto;
+    background: #73bfbc;
+    height: 200px;
+    border-radius: 10px; }
+        .headw{ clear: both;
+    width: 100%;
+    text-align: center;
+    font-size: 19px; padding: 10px;  }
+        .rowd{clear:both; width: 100%; text-align: center; font-size: 18px;padding: 10px;}
+        .leftd{  width: 50%; text-align: right;padding: 10px; float: left;}
+        .rightd{   width: 40%; text-align: left;padding: 10px;  float: left;}
+        .subd{clear:both; width: 90%; text-align: right; padding: 10px;  float: left;}
+    </style>
 </head>
 <body>
-    <h1>Upload an Image for Prediction</h1>
-    <form action="/" method="post" enctype="multipart/form-data">
-        <label for="image">Select image to upload:</label>
-        <input type="file" name="image" id="image" accept="image/*" required>
-        <br><br>
-        <input type="submit" value="Upload Image">
+    <div class="wrapper">
+        <div class="headw" style="font-size: 23px;">
+            Age,Gender,Emotion detection Project Using CNN
+        </div>
+        <div class="headw">
+            Upload an Image for Prediction
+        </div>
+        <form action="/" method="post" enctype="multipart/form-data"> 
+        <div class="leftd">
+            <label for="image">Select image to upload:</label>
+        </div>
+        <div class="rightd">
+            <input type="file" name="image" id="image" accept="image/*" required>
+        </div>
+        <div class="subd"> <input type="submit" value="SUBMIT"></div>
+       
+    </div> 
+        
     </form>
 </body>
 </html>
