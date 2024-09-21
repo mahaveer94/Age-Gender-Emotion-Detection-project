@@ -12,8 +12,9 @@ This project utilizes a Convolutional Neural Network (CNN) to detect age, gender
 - **Emotion Detection**: Classifies common emotions (happy, sad, neutral, etc.).
 
 ## Dataset
-- **Source**: UTK Face Dataset
-- **Images**: 20,000+ labeled images in the format [age]_[gender]_[race]_[date].jpg
+- Facial-age & UTKFace for Age Detection
+- UTK Faces for Gender Detection
+- CT+ for Emotion Detection
 - **Preprocessing**: Images resized to 48x48 pixels, converted to grayscale for CNN input.
 
 ## Model Architecture
@@ -26,5 +27,5 @@ The CNN model is composed of:
 ## Performance Matrics
 - **Age Prediction Accuracy: 82%
 - **Gender Classification Accuracy: 90%
-- **Emotion Detection F=Accuracy: 97%
+- **Emotion Detection Accuracy: 97%
 
