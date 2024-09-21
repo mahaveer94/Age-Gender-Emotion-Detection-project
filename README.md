@@ -4,7 +4,7 @@
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
 ## Project Overview
-This project utilizes a Convolutional Neural Network (CNN) to detect age, gender, and emotions from human facial images. It is trained on the **UTK Face Dataset**, a widely-used dataset for age, gender, and race prediction.
+This project utilizes a Convolutional Neural Network (CNN) to detect age, gender, and emotions from human facial images. It is trained on the **UTK Face ,Facial-age & CT+ Dataset**, a widely-used dataset for age, gender, and emotion prediction.
 
 ## Features
 - **Age Prediction**: Predicts the age range from facial images.
