@@ -25,6 +25,6 @@ The CNN model is composed of:
 
 ## Performance Matrics
 - **Age Prediction Accuracy: 82%
-- **Gender Classification Accuracy**: 90%
+- **Gender Classification Accuracy: 90%
 - **Emotion Detection F=Accuracy: 97%
 
