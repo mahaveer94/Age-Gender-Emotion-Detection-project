@@ -25,7 +25,7 @@ The CNN model is composed of:
 - Output layer with softmax activation for emotion classification
 
 ## Performance Matrics
-- **Age Prediction Accuracy: 82%
+- **Age Detection Accuracy: 82%
 - **Gender Classification Accuracy: 90%
 - **Emotion Detection Accuracy: 97%
 
